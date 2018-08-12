@@ -1,0 +1,16 @@
+\babel@toc {french}{}
+\contentsline {chapter}{\numberline {I}Remerciements}{3}{chapter.1}
+\contentsline {chapter}{\numberline {II}Introduction}{4}{chapter.2}
+\contentsline {chapter}{\numberline {III}Pr\IeC {\'e}sentation}{5}{chapter.3}
+\contentsline {section}{\numberline {III.1}Alloa Voyages}{5}{section.3.1}
+\contentsline {subsection}{\numberline {III.1.a}L'agence de voyage}{5}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {III.1.b}L'agence et le domaine de l'informatique}{5}{subsection.3.1.2}
+\contentsline {section}{\numberline {III.2}Technologies utilis\IeC {\'e}es}{6}{section.3.2}
+\contentsline {subsection}{\numberline {III.2.a}Golang et GopherJS}{6}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {III.2.b}gRPC et Protocol Buffers}{7}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {III.2.c}PostgreSQL}{8}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {III.2.d}Bootstrap}{8}{subsection.3.2.4}
+\contentsline {chapter}{\numberline {IV}Missions}{9}{chapter.4}
+\contentsline {section}{\numberline {IV.1}Pr\IeC {\'e}sentation et Organisation}{9}{section.4.1}
+\contentsline {section}{\numberline {IV.2}Hyooper}{10}{section.4.2}
+\contentsline {section}{\numberline {IV.3}Site Commercial}{11}{section.4.3}
