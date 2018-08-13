@@ -259,19 +259,61 @@ Pour ce qui est du côté client, je me suis assuré de la mise en page ainsi qu
 
 \section{Site Commercial}
 
+\subsection{Client}
+
 La création du site commercial c'est basé sur l'ancien site  se trouvant à l'adresse suivante: https://www.alloa.com . Pour ce qui est du template Bootstrap nous avons utilisé Bushido. \\
 
-Au niveau du côté client je me suis occupé à créer les différentes pages html qui vont composer le site comme la page d'accueil , la page de contact , ... en m'assurant de respecter la mise en page voulu par monsieur Dewintre en me basant sur des croquis. Dans un second temps je me suis attelé à ce que ces pages soit responsive donc adapté aux smartphones et tablettes.\\
+ Je me suis occupé à créer les différentes pages html qui vont composer le site comme la page d'accueil , la page de contact , ... en m'assurant de respecter la mise en page voulu par monsieur Dewintre en me basant sur des croquis. Dans un second temps je me suis attelé à ce que ces pages soit responsive donc adapté aux smartphones et tablettes.\\
 
-\begin{figure}[!h]
-\centerline{\includegraphics[scale=0.3]{responsive.png}}
-\caption{visualisation d'une page web responsive à l'aide de l'outil inspecter et de Toggle device toolbar}
-\label{image_hyooper}
-\end{figure}
 
+
+
+\subsubsection{Responsive Web Design}
 Pour visualiser le rendu que le site pouvait donner en version mobile j'ai utiliser la fonction inspecter que l'on obtient en faisant un clic droit sur une page web puis j'ai utiliser l'option Toggle device toolbar.\\
 
-Pour rendre le site responsive j'ai du apprendre le système de grille de Bootstrap avec les colonnes(col) et les lignes(row).
+Pour rendre le site responsive j'ai du apprendre le système de grille de Bootstrap avec les colonnes(col) et les lignes(row). Pour ce faire, le contenue du site web doit être contenu dans une balise dans lequel on applique la class container. Ensuite ont créer une ligne avec la class row et on positionne chaque élément dans une colonne à l'aide de la class col. Dans cette configuration les éléments sont placé les un à côté des autres sur une même ligne sur un écran d'ordinateur et se positionne les un en dessous des autres en version mobile.\\
+
+
+
+\subsubsection{Leaflet}
+
+Sur le site nous avons eu besoin d'afficher des cartes et pour se faire nous avons utiliser Leaflet \footnote{https://leafletjs.com} qui à été développé par Vladimir Agafonkin.  Leaflet est une bibliothèque JavaScript open-source pour l'affichage de carte interactive. A l'aide de cette outil nous avons pu afficher des localisations à l'aide de coordonnées GPS (latitude et longitude), positionner un marqueur à un endroit voulu, lui assigner une pop up ...
+Cela nous à été utile sur la page contact pour la localisation de l'agence de voyage dans Lille et pour la localisation des hébergements et des choses à voir à proximité de ceux-ci ainsi que pour les circuits ou nous avons reliée les différentes étapes du tour.\\
+
+\subsection{Serveur}
+ Je me suis occupé des requêtes en base de donnée pour la récupération des listes de destinations/pays/régions/villes ainsi que de l'affichage des produits (tours touristiques et hébergements) proposé par l'agence.\\
+
+\subsubsection{La gestion des menus deroulants}
+J'ai du créer les requêtes pour par exemple récupérer à partir de l'uuid d'une destination les pays correspondant à cette destination. Pour stocker les listes de destinations j'ai utilisé en html la balise select qui permet de créer un menu déroulant. Dans ce select j'ai créer autant d'option qu'il y avait de destination et pour chaque destination dans la value correspondant à l'option je lui est associé son uuid.\\
+
+Je créer ensuite une fonction en GopherJS ou j'ajoute un écouteur à mon menu déroulant.  J'écoute l'événement click sur ce menu pour savoir la destination que l'utilisateur à choisi en récupérant la value (ici l'uuid) lié  à la destination. Ensuite je passe l'uuid en paramètre de la requête pour obtenir la liste des pays en lien avec cette destination et ainsi de suite pour les régions et les villes. \\
+
+\subsubsection{La récupération des  gateways}
+
+Une autre tâche qui m'a été confié à été à partir de coordonnées GPS d'un point de trouver les gateways se trouvant à une certaine distance de ce point. Un gateways est une passerelle et correspond à tous ce qui est aéroport, gare , port, métro ...\\
+
+Tous d'abord j'ai écrit une fonction de conversion de degré en radian. Ensuite j'ai créer une fonction qui calcul la distance entre deux points à partir de leur latitude et leur longitude et du rayon de la Terre que j'ai fixé à 6378000 mètres .\\
+
+Le calcul étant :\\
+
+distance = RayonTerre * (math.Pi/2 - math.Asin( math.Sin(latitudeCoord2) * math.Sin(latitudeCoord1) + math.Cos(longitudeCoord2 - longitudeCoord1) * math.Cos(latitudeCoord2) * math.Cos(latitudeCoord1)))
+
+Ensuite il suffit de comparer si la distance calculé entre notre points (ex: Rome) et un gateway quelconque (ex: Aéroport de Milan Malpensa)  est inférieur ou supérieur à la distance passé en paramètre. Si elle est inférieur alors le gateway ce trouve dans le périmètre d'étude sinon non.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
