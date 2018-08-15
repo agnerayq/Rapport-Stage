@@ -13,10 +13,14 @@
 \contentsline {chapter}{\numberline {IV}Missions}{9}{chapter.4}
 \contentsline {section}{\numberline {IV.1}Pr\IeC {\'e}sentation et Organisation}{9}{section.4.1}
 \contentsline {section}{\numberline {IV.2}Hyooper}{10}{section.4.2}
-\contentsline {section}{\numberline {IV.3}Site Commercial}{11}{section.4.3}
-\contentsline {subsection}{\numberline {IV.3.a}Client}{11}{subsection.4.3.1}
+\contentsline {section}{\numberline {IV.3}Site Commercial}{12}{section.4.3}
+\contentsline {subsection}{\numberline {IV.3.a}Client}{12}{subsection.4.3.1}
 \contentsline {subsubsection}{Responsive Web Design}{12}{subsection.4.3.1}
-\contentsline {subsubsection}{Leaflet}{12}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {IV.3.b}Serveur}{13}{subsection.4.3.2}
-\contentsline {subsubsection}{La gestion des menus deroulants}{13}{subsection.4.3.2}
-\contentsline {subsubsection}{La r\IeC {\'e}cup\IeC {\'e}ration des gateways}{13}{subsection.4.3.2}
+\contentsline {subsubsection}{Leaflet}{13}{figure.4.2}
+\contentsline {subsection}{\numberline {IV.3.b}Serveur}{14}{subsection.4.3.2}
+\contentsline {subsubsection}{La gestion des menus deroulants}{14}{subsection.4.3.2}
+\contentsline {subsubsection}{La r\IeC {\'e}cup\IeC {\'e}ration des gateways}{15}{subsection.4.3.2}
+\contentsline {subsubsection}{La r\IeC {\'e}cup\IeC {\'e}ration et l'affichage des produits}{16}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {V}Bilan}{18}{chapter.5}
+\contentsline {chapter}{\numberline {VI}Conclusion}{20}{chapter.6}
+\contentsline {chapter}{\numberline {VII}Abstact}{21}{chapter.7}

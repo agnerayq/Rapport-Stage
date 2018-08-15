@@ -210,6 +210,8 @@ message Destination {
   repeated Pays pays = 3;
 }
 \end{lstlisting}
+
+Ce fichier est un fichier protobuf avec l'extension .proto. Ce fichier contient la définition d'un message ici Destination. Chaque message commence avec la directive message. Ce message contient une liste de champs avec leur type comme string, int32 , bool ... et un identifiant. Le mot clé repeated correspond à une liste de type. Ici il s'agit d'un tableau de pays. A chaque message nous associons un numéro unique qui sert à identifier le champ.
 \subsection{PostgreSQL}
 PostgreSQL est un système de bases de données relationnelles objet développé à l'université de Berkeley en Californie en 1986 sous le nom de POSTGRES puis PostegreSQL  à partir de 1996. Pour administrer notre base de donnée nous avons  utilisé pgAdmin qui est un outil pour PostgreSQL. Ce logiciel m'a permis de tester mes requêtes sur la base de donnée et de voir le contenue des tables. Pour finir j'ai travaillé sur pgModeler pour visualiser le MCD (Modèle Conceptuel de Données) , ce qui m'a permis de voir les tables et les différents liens, relations entre celles-ci.
 
@@ -245,7 +247,7 @@ Au niveau de mon organisation personnel pour mon travail, j'ai beaucoup travaill
 
 Hyooper est un progiciel de gestion globale de l'agence de voyage. Ce logiciel à pour but de faciliter l'ajout, la suppression et la modification d'informations sur des composantes d'un voyage par exemple comme  une destination, un hébergement, un circuit touristique ... Mais pas seulement il permet également de pouvoir gérer tous ce qui concerne le marketing, la direction , les sous traitant ...\\
 
-\begin{figure}[!h]
+\begin{figure}[h]
 \centerline{\includegraphics[scale=0.3]{hyooper.png}}
 \caption{logiciel hyooper module Nos Zones (Destinations)}
 \label{image_hyooper}
@@ -257,6 +259,7 @@ Le travail que j'ai effectué à été de créer des "modules" sur la composante
 
 Pour ce qui est du côté client, je me suis assuré de la mise en page ainsi que de la  récupération des données et de leur ajout dans le fichier HTML en utilisant GopherJS. Pour la mise en page du site nous avons utiliser Bootstrap et en particulier SB Admin 2 qui est un template\footnote{un template est un modèle pour l'architecture du design d'une page }. La création des zones de texte pour l'affichage de la description d'un module c'est fait grâce à l'API(Application Programming Interface) Quill.
 
+\newpage
 \section{Site Commercial}
 
 \subsection{Client}
@@ -273,12 +276,24 @@ Pour visualiser le rendu que le site pouvait donner en version mobile j'ai utili
 
 Pour rendre le site responsive j'ai du apprendre le système de grille de Bootstrap avec les colonnes(col) et les lignes(row). Pour ce faire, le contenue du site web doit être contenu dans une balise dans lequel on applique la class container. Ensuite ont créer une ligne avec la class row et on positionne chaque élément dans une colonne à l'aide de la class col. Dans cette configuration les éléments sont placé les un à côté des autres sur une même ligne sur un écran d'ordinateur et se positionne les un en dessous des autres en version mobile.\\
 
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.3]{responsive.png}}
+\caption{Page web responsive utilisation de la fonction inspecter et de Toggle device toolbar}
+\label{image_hyooper}
+\end{figure}
 
 
+\newpage
 \subsubsection{Leaflet}
 
 Sur le site nous avons eu besoin d'afficher des cartes et pour se faire nous avons utiliser Leaflet \footnote{https://leafletjs.com} qui à été développé par Vladimir Agafonkin.  Leaflet est une bibliothèque JavaScript open-source pour l'affichage de carte interactive. A l'aide de cette outil nous avons pu afficher des localisations à l'aide de coordonnées GPS (latitude et longitude), positionner un marqueur à un endroit voulu, lui assigner une pop up ...
 Cela nous à été utile sur la page contact pour la localisation de l'agence de voyage dans Lille et pour la localisation des hébergements et des choses à voir à proximité de ceux-ci ainsi que pour les circuits ou nous avons reliée les différentes étapes du tour.\\
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.3]{leaflet.png}}
+\caption{Page contact avec affichage d'une carte avec la localisation de l'agence Alloa}
+\label{image_hyooper}
+\end{figure}
 
 \subsection{Serveur}
  Je me suis occupé des requêtes en base de donnée pour la récupération des listes de destinations/pays/régions/villes ainsi que de l'affichage des produits (tours touristiques et hébergements) proposé par l'agence.\\
@@ -296,9 +311,77 @@ Tous d'abord j'ai écrit une fonction de conversion de degré en radian. Ensuite
 
 Le calcul étant :\\
 
-distance = RayonTerre * (math.Pi/2 - math.Asin( math.Sin(latitudeCoord2) * math.Sin(latitudeCoord1) + math.Cos(longitudeCoord2 - longitudeCoord1) * math.Cos(latitudeCoord2) * math.Cos(latitudeCoord1)))
+distance = RayonTerre * (math.Pi/2 - math.Asin( math.Sin(latitudeCoord2) * math.Sin(latitudeCoord1) + math.Cos(longitudeCoord2 - longitudeCoord1) * math.Cos(latitudeCoord2) * math.Cos(latitudeCoord1)))\\
 
 Ensuite il suffit de comparer si la distance calculé entre notre points (ex: Rome) et un gateway quelconque (ex: Aéroport de Milan Malpensa)  est inférieur ou supérieur à la distance passé en paramètre. Si elle est inférieur alors le gateway ce trouve dans le périmètre d'étude sinon non.
+
+\newpage
+
+\subsubsection{La récupération et l'affichage des  produits}
+
+La récupération et l'affichage des produits c'est fait de la manière suivante. J'ai crée des messages dans un fichier .proto pour définir ce à quoi correspond un hébergement et un tour touristique. J'ai ensuite créer des rpc pour définir ce que je souhaite passé en paramètre et ce que je souhaite retourner. Ici je passe en paramétre une DestinationLang qui correspond à un uuid et une lang et je retourne soit un TourList soit un HebergementList.\\
+
+ En second temps je créer une fonction pour appeler ma requête qui prendra en paramétre un pointeur sur un server.DestinationLang et me retournera un pointeur sur un server.TourList ou une erreur si la requête échoue.\\
+ 
+Voici un exemple de requête:
+
+\begin{verbatim}
+SELECT DISTINCT ON(tour.uuid_tour) tour.frlib, tour.uuid_tour, tour.uuidville
+image.frlib , image.ref_image, image.extension
+FROM catalog.tour, catalog.z_liens_regions_villes , 
+map.zliens_destinations_regions
+WHERE tour.uuid_tour = z_liens_image.uuidcomposant::uuid
+AND z_liens_image.uuidimage::uuid = image.uuid_image
+AND zliens_regions_villes.uuid_nosregions_nosregions
+ = zliens_destinations_regions.uuid_nosregions_nosregions
+AND tour.uuidville = zliens_regions_villes.uuid_villes_villes
+AND zliens_destinations_regions.uuid_noszones = noszones.uuid_noszones
+\end{verbatim}
+
+J'ai utilisé DISTINCT pour éviter d'avoir des doublons au niveau des résultats.
+L'utilisation des ::  permet de convertir un type dans un autre.
+
+\newpage
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.3]{produit.png}}
+\caption{Affichage des hébergements correspondant à la destination Amérique du Nord}
+\label{image_hyooper}
+\end{figure}
+
+\newpage
+
+\chapter[Bilan]{Bilan}
+
+Le début du stage à été un peu difficile pour moi pour plusieurs raisons.\\
+
+ Tout d'abord je ne connaissais pas le langage Golang ni le GopherJS donc il m'a fallut un peu de temps pour apprendre les bases du langage. Pour le Golang cela à été plutôt facile car il y a pas mal de documentation sur internet comme https://godoc.org qui est un équivalent à la javadoc en java ou encore https://gobyexample.com . Pour le GopherJS cela à été plus compliquer car il y a très peu de documentation sur internet.\\
+
+Pour la partie client(HTML,CSS,JavaScript) j'ai suivi les exemple du site https://www.w3schools.com ainsi que ceux sur le site https://getbootstrap.com\\
+
+Pour ce qui est du SQL je me suis servie du site https://sql.sh . J'ai également discuté avec monsieur Dewintre sur comment diminué le temps des requêtes en base de donnée en utilisant des index et en créant des liens entre les tables qui été manquant.\\
+
+Si je ne trouver pas les informations que je recherché j'ai parcouru les forum  comme https://stackoverflow.com ou je discuter avec les autres stagiaires pour voir si il n'avait pas déjà rencontré les mêmes difficultés.\\
+
+L'autre difficulté à été de m'intégrer à un projet qui été déjà avancé et de trouver ma place, ce que je pouvais apporter au projet et de fixer moi même mes propres tâches à effectuer chaque jours.\\
+
+Ce stage m'a appris à être totalement autonome à combattre ma timidité et à m'ouvrir pour demander de l'aide quand j'en avais vraiment besoin. Le stage m'a permis également de croire en moi, et de voir que malgré les difficultés rencontré j'ai réussie à produire des choses et que j'ai réussie à m'intégrer à une équipe.\\
+
+J'ai également aimé le fait de transmettre les connaissances que j'avais appris à un autre stagiaire pour qu'il puisse reprendre mon travail.\\
+
+Le projet qui m'a le plus intéressé à été le site web car il y a un travail de création de mise en forme du site qui m'a plus et j'ai également aimé le travail sur les bases de données.
+
+\chapter[Conclusion]{Conclusion}
+
+
+\chapter[Abstact]{Abstract}
+
+
+
+
+
+
+
 
 
 
